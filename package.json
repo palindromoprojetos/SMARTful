@@ -2,7 +2,7 @@
   "name": "smartful",
   "version": "1.0.0",
   "description": "Fast, unopinionated, minimalist web framework",
-  "main": "index.js",
+  "main": "./dist/web-api.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/palindromoprojetos/SMARTful.git"
