@@ -1,0 +1,9 @@
+{
+    // Comments are supported, like tsconfig.json
+    "entryPoints": ["api/stores/index.ts"],
+    "out": "docs",
+    "includeVersion": true,
+    "$schema": "https://typedoc.org/schema.json",
+    "plugin": ["@mxssfd/typedoc-theme"],
+    "theme": "my-theme"
+}
