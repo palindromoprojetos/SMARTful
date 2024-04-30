@@ -1,4 +1,4 @@
-import { DisconnectReason, Socket } from "socket.io";
+import { Socket } from "socket.io";
 import { serverIO } from "./http.server";
 
 interface RoomUser {
@@ -8,10 +8,6 @@ interface RoomUser {
 }
 
 enum RoomEvent {
-    WATCH = 'WATCH',
-    WASTE = 'WASTE',
-    CHECK = 'CHECK',
-    PRINT = 'PRINT',
     GET_NAME = 'GET_NAME',
     SET_NAME = 'SET_NAME',
     SET_ROOM = 'SET_ROOM',
@@ -67,33 +63,6 @@ serverIO.on('connection',
                 }
 
                 await socket.join(data.room);
-            }
-        );
-
-        socket.on(RoomEvent.WATCH,
-            (data: any) => {
-                serverIO.to(data.room).emit(RoomEvent.WATCH, data);
-            }
-        );
-
-        socket.on(RoomEvent.WASTE,
-            (data: any) => {
-                serverIO.to(data.room).emit(RoomEvent.WASTE, data);
-            }
-        );
-
-        socket.on(RoomEvent.CHECK,
-            (data: any) => {
-                serverIO.to(data.room).emit(RoomEvent.CHECK, data);
-            }
-        );
-
-        socket.on(RoomEvent.PRINT,
-            (data: any) => {
-                const user = roomUser.find(user => user.user == data.user);
-                if(user) {
-                    serverIO.to(user.room).emit(RoomEvent.PRINT, data);
-                }
             }
         );
 

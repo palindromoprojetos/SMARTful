@@ -1,8 +1,8 @@
 {
   "name": "smartful",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Fast, unopinionated, minimalist web framework",
-  "main": "./dist/web-api.js",
+  "main": "build/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/palindromoprojetos/SMARTful.git"
@@ -17,11 +17,10 @@
   },
   "homepage": "https://github.com/palindromoprojetos/SMARTful#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "npm run build",
     "watch": "nodemon --watch \"api/*\" --ext \"ts,json\" --ignore \"api//.spec.ts\" --exec \"ts-node api/index.ts\"",
-    "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 api/**/*.json api/**/*.pem api/**/*.prn dist/api/",
+    "clean": "rimraf build/",
+    "copy-files": "copyfiles -u 1 api/**/*.json api/**/*.pem api/**/*.prn build/api/",
     "build": "npm run clean && tsc && npm run copy-files"
   },
   "dependencies": {
@@ -32,12 +31,10 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
-    "mongodb": "^5.7.0",
     "msnodesqlv8": "^4.1.2",
     "node-schedule": "^2.1.1",
     "node-windows": "^1.0.0-beta.8",
     "reflect-metadata": "^0.1.13",
-    "serialport": "^10.0.0",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "ts-node": "^10.9.1",
@@ -48,10 +45,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.1",
-    "@types/moment": "^2.13.0",
-    "@types/mongodb": "^4.0.7",
     "@types/node-schedule": "^2.1.0",
-    "@types/serialport": "^8.0.2",
     "copyfiles": "^2.4.1",
     "nodemon": "^3.0.1",
     "rimraf": "^5.0.1",

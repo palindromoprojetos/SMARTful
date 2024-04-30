@@ -1,5 +1,5 @@
-import { rmn } from "../../utils/smartful.utils";
 import { IRouteBase } from "../smartful.data";
+import { rmn } from "../../utils/smartful.utils";
 
 export class RouteBase implements IRouteBase {
     get annotation(): any {

@@ -1,0 +1,9 @@
+src
+coverage
+test
+karma.conf.js
+rollup.config.js
+tsconfig.json
+test.tsconfig.json
+api_build.bat
+npm_publish.bat

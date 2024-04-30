@@ -5,7 +5,7 @@ import { Application }  from 'express';
 import fs from 'fs';
 import path from 'path';
 
-import { MongoBuilder, QueryBuilder } from './ORM/smartful.orm';
+import { QueryBuilder } from './ORM/smartful.orm';
 import { IModelBase, IRouteBase, IStoreBase } from './data/smartful.data';
 import { ModelManager, RouteManager, StoreManager, LocalManager, MetaDataKeys, IModel } from './utils/smartful.utils';
 
@@ -18,7 +18,7 @@ import "./utils/core/http.config";
  * WebApi
  * Singleton class
  */
-export default class WebApi {
+export class WebApi {
 
     private static _instance: WebApi;
     private static _basePath: string;
@@ -101,7 +101,6 @@ export default class WebApi {
                     RouteManager.setPrivateKey(`japoka@bojoka`);
 
                     await QueryBuilder.create(config[build]);
-                    await MongoBuilder.create(build);
                 }
             );
 

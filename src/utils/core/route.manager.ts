@@ -101,7 +101,7 @@ export class RouteManager {
               router[method](`${prefix}${suffix}`, 
                 (req: Request, res: Response, next: NextFunction) => {
                   const auth: any = req.header('Authorization');
-                  let resultSet: ResultSet = new ResultSet();
+                  let result: ResultSet = new ResultSet();
 
                   // Não requer token
                   if(item.auth == OAuth2.none) {
@@ -110,23 +110,23 @@ export class RouteManager {
 
                   // Requer token
                   if(!auth || auth.length == 0) {
-                    resultSet.message.message = 'INVALID_TOKEN';
-                    resultSet.message.errorMessage = 'Badly formed token!';
-                    resultSet.message.status = HttpStatus.PRECONDITION_REQUIRED;
+                    result.message.message = 'INVALID_TOKEN';
+                    result.message.errorMessage = 'Badly formed token!';
+                    result.message.status = HttpStatus.PRECONDITION_REQUIRED;
 
-                    resultSet
-                      .setText(resultSet.message.message)
-                      .setStatus(resultSet.message.status);
+                    result
+                      .setText(result.message.message)
+                      .setStatus(result.message.status);
 
-                    return res.status(resultSet.message.status).json(resultSet.data);
+                    return res.status(result.message.status).json(result.data);
                   }
 
                   // RouteManager.verifyToken, => TokenSession.create
                   const token: string = auth.split(' ').pop();
-                  resultSet = RouteManager.verifyToken(token);
+                  result = RouteManager.verifyToken(token);
 
-                  if(!resultSet.success) {
-                    return res.status(resultSet.message.status).json(resultSet.data);
+                  if(!result.success) {
+                    return res.status(result.message.status).json(result.data);
                   }
 
                   return next();

@@ -2,7 +2,6 @@ export * from './core/http.status';
 
 export * from './core/httpverb.keys';
 export * from './core/metadata.keys';
-
 export * from './core/model.manager';
 export * from './core/store.manager';
 export * from './core/route.manager';

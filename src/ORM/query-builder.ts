@@ -128,32 +128,6 @@ export class QueryBuilder {
                 }
             );
         }
-
-        // this.aliasList.forEach(
-        //     (list: any) => {
-        //         if(list.alias == alias) {
-        //             const aliasCode: string = list.tuple;
-        //             const aliasName: string = list.alias;
-        //             const patternid: RegExp = new RegExp(`\\s+(?:\\(*)(${aliasName})\\.`,'gm');
-        //             this._sql = this._sql.replace(patternid,
-        //                 (match, group) => {
-        //                     return group === aliasName ? match.replace(group,aliasCode) : match;
-        //                 }
-        //             );
-        //         }
-
-        //         if(alias == undefined) {
-        //             const aliasCode: string = list.tuple;
-        //             const aliasName: string = list.alias;
-        //             const patternid: RegExp = new RegExp(`\\s+(?:\\(*)(${aliasName})\\.`,'gm');
-        //             this._sql = this._sql.replace(patternid,
-        //                 (match, group) => {
-        //                     return group === aliasName ? match.replace(group,aliasCode) : match;
-        //                 }
-        //             );
-        //         }
-        //     }
-        // );
     }
 
     //#endregion
@@ -321,18 +295,6 @@ export class QueryBuilder {
             }
         }
 
-        // model.fields.forEach(
-        //     (field: string) => {
-        //         const property: any = model.annotation.Properties.find((item: any) => item['name'] == field);
-        //         const column: any = property.meta.Column;
-        //         const auto: boolean = column.strategy == 'AUTO';
-
-        //         if((field != 'id' || field == 'id' && !auto) && (model.modifieds.indexOf(field) != -1)) {
-        //             fields.push(field);
-        //         }
-        //     }
-        // );
-
         if (fields.length == 0) {
             notify('self::NOT_MODIFIED_DATA')
         }
@@ -412,41 +374,6 @@ export class QueryBuilder {
             }
         }
 
-        // model.fields.forEach(
-        //     (field: string) => {
-        //         const property: any = notate.Properties.find((item: any) => item.name == field);
-        //         const column: any = property.meta.Column;
-
-        //         switch (type) {
-        //             case TypeDML.DML_INSERT:
-        //                 const auto: boolean = column.strategy == 'AUTO';
-        //                 if((field != 'id' || field == 'id' && !auto) && (model.modifieds.indexOf(field) != -1)) {
-        //                     const value: any = this._parseValue(selfModel[field], column.type);
-        //                     sql = sql.replaceAll(`:${field}`, value);
-        //                 }
-        //                 break;
-        //             case TypeDML.DML_UPDATE:
-        //                 if(model.modifieds.indexOf(field) != -1) {
-        //                     const value: any = this._parseValue(selfModel[field], column.type);
-        //                     sql = sql.replaceAll(`:${field}`, value);
-        //                 }                   
-        //                 break;
-        //             case TypeDML.DML_DELETE:
-        //                 if(field == 'id') {
-        //                     const value: any = this._parseValue(selfModel[field], column.type);
-        //                     sql = sql.replaceAll(`:${field}`, value);
-        //                 }                   
-        //                 break;
-        //             case TypeDML.DML_SELECT:
-        //                 if(field == 'id') {
-        //                     const value: any = this._parseValue(selfModel[field], column.type);
-        //                     sql = sql.replaceAll(`:${field}`, value);
-        //                 }                   
-        //                 break;
-        //         }
-        //     }
-        // );
-
         return sql;
     }
 
@@ -502,15 +429,8 @@ export class QueryBuilder {
     }
 
     private join(join: string, alias: string, condition: Array<any>) {
-        // const list: Array<string> = Array<string>();
-        // const tuple: Array<string> = Array<string>();
-        // const regex = new RegExp('[A-Za-z0-9\\-\\_]+\\.\\*', 'gm');
         const table: string = mmn.getMetaData(join).Model.table;
         const aliasCode: string = this.newAlias(join, alias);
-
-        // mmn.getMetaData(join).Properties.forEach((item: any) => tuple.push(item.name));
-        // tuple.forEach(field => list.push(`${aliasCode}.${field}`));
-        // const fieldList: string = list.join("\n\t, ").trim();
 
         if(condition.length > 3) {
             this._sql += `\n\tJOIN ${table} ${aliasCode} on (\n`;
@@ -523,8 +443,6 @@ export class QueryBuilder {
         }
 
         this.setAlias(alias);
-
-        // this._sql = this._sql.replace(regex, fieldList);
     }
 
     leftJoin(join: string, alias: string, condition: Array<any>): QueryBuilder {

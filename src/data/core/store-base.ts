@@ -1,23 +1,18 @@
-import { Request, Response } from 'express';
-import { Db } from 'mongodb';
-
-import { MongoBuilder, QueryBuilder, TypeDML } from '../../ORM/smartful.orm';
-import { HttpStatus, IEvent, tks, mmn, smn, serverIO } from '../../utils/smartful.utils';
-import { IModelBase, IStoreBase, MessageError, ResultSet, notify } from '../smartful.data';
+import { QueryBuilder, TypeDML } from '../../ORM/smartful.orm';
+import { HttpStatus, IEvent, tks, mmn, smn } from '../../utils/smartful.utils';
+import { Request, Response, IModelBase, IStoreBase, MessageError, ResultSet, notify } from '../smartful.data';
 
 import moment from 'moment';
 
 export class StoreBase implements IStoreBase, IEvent {
 
     public qbd: QueryBuilder;
-    public mdb: MongoBuilder;
 
     constructor( 
         public req?: Request,
         public res?: Response,
     ) {
         this.qbd = QueryBuilder.instance;
-        this.mdb = MongoBuilder.instance;
     }
 
     get annotation(): any {
@@ -32,42 +27,6 @@ export class StoreBase implements IStoreBase, IEvent {
         const model: any = mmn.getMetaData(this.modelName);
 
         return model;
-    }
-
-    async sendMessages(event: string, module: string, value: any): Promise<ResultSet> {
-        let result: ResultSet = new ResultSet();
-        let update: string = moment().format('YYYY-MM-DD HH:mm:ss');
-        let thread: string = (new String(smn.thread)).padStart(2, '0');
-
-        try {
-            const data: any = {
-                type: event.toUpperCase(),
-                module: module,
-                update: update,
-                status: value.status,
-                success: value.success,
-                ...value
-            };
-
-            // Envia para o SocketServer
-            serverIO.to(data.room).emit(data.type, data);
-
-            // Envia para o MongoDB
-            const watchc: Db = this.mdb.mongoc.db(`thread_${thread}`);
-
-            await watchc.collection(`WATCH`).insertOne(data);
-
-        } catch (err: any) {
-            result.message.code = 'BAD_GATEWAY';
-            result.message.status = HttpStatus.BAD_GATEWAY;
-            result.message.errorMessage = err.message;
-
-            result
-                .setSuccess(false)
-                .setMessage(result.message);
-        }
-
-        return result
     }
 
     //#region CRUD
